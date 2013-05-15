@@ -1,0 +1,493 @@
+<?php
+  session_start();
+
+ $_SESSION['iddoctor'] = $row['iddoctor'];
+          $_SESSION['email'] = $row['email'];
+  	  $doctor_name = $row['first_name'].$row['last_name'];
+		  $_SESSION['doctor'] = $doctor_name ;
+
+
+  // If the session vars aren't set, try to set them with a cookie
+  if (!isset($_SESSION['iddoctor'])) {
+    if (isset($_COOKIE['iddoctor']) && isset($_COOKIE['email'])) {
+      $_SESSION['iddoctor'] = $_COOKIE['iddoctor'];
+      $_SESSION['email'] = $_COOKIE['email'];
+	  $_SESSION['doctor'] = $_COOKIE['doctor'];	  
+	
+    }
+  }
+  if(!$_SESSION['doctor']){
+  	exit();
+  }
+  
+  
+  
+  if(isset ($_SESSION['doctor'])){
+  	 if (!isset($_SESSION['email'])){
+  	 	 if (!isset($_COOKIE['iddoctor'])){
+  	 	 	 if(!isset( $_COOKIE['email'])){
+  	 	 	 if(!isset( $_COOKIE['doctor'])){	
+  
+  	exit();
+  }}}}	}
+  
+  $email = $_SESSION['email'];
+  
+  $dbc = mysqli_connect("localhost","ahmedali","ahmedali32", "medical") or die("no connection");
+  
+  $query = "SELECT  `p_email`, `first_name`, `d_email` FROM `doctor_patients` where d_email = '$email'";
+  
+  $data = mysqli_query($dbc , $query);
+  
+  $patients = array();
+  $first_name = array();
+  $i = 0 ;
+  while($row = mysqli_fetch_array($data)){
+    $patients[$i]=$row['p_email'];
+	$first_name[$i] =$row['first_name'];
+	$i++;
+  } 
+  
+  
+  
+  function get($num){
+ $String = file_get_contents("http://www.drugs.com/js/search.php?id=livesearch-interaction&s=".$num."&op=");
+  $Stringg = file_get_contents("http://drugscom.us.intellitxt.com/v4/init?ts=1366647083189&pagecl=11589&fv=11&muid=&refurl=http%3A%2F%2Fwww.drugs.com%2Finteractions-check.php%3Fdrug_list%3D2381-0%2C233-109%2C3160-13964&ipid=693&mk=5&jscallback=$iTXT.js.callback0");
+ 
+return $String;
+}
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Modern Medical</title>
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ 
+<style type="text/css">
+table.imagetable {
+	font-family: verdana,arial,sans-serif;
+	font-size:11px;
+	color:#333333;
+	border-width: 1px;
+	border-color: #999999;
+	border-collapse: collapse;
+}
+table.imagetable th {
+	background:#b5cfd2 url('cell-blue.jpg');
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #999999;
+}
+table.imagetable td {
+	background:#dcddc0 url('cell-grey.jpg');
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #999999;
+}
+
+
+
+.cssguycomments {background:#eee;border:#ddd;padding:8px;margin-bottom:40px;}
+.cssguycomments p {font:normal 12px/18px verdana;}
+
+a img {border:0;vertical-align:text-bottom;}
+table {border-collapse:collapse;}
+th.side {
+	background: transparent url(i/bg_th_side.gif) no-repeat bottom left;
+}
+td.side {
+	text-align:right;
+	background: transparent url(i/bg_td_side.gif) no-repeat bottom left;
+	width:180px;
+	font:bold 12px/15px verdana;
+	color:#6e6f37;
+	padding-right:8px;
+}
+
+th {
+	height:64px;
+	border-right:1px solid #fff;
+	vertical-align:bottom;
+	color:#fff;
+	font:normal 21px/27px arial;
+	letter-spacing:2px;
+	background:transparent url(i/bg_th.gif) no-repeat bottom left;
+	}
+td {
+	text-align:center;
+	background:transparent url(i/bg_td.gif) no-repeat bottom left;
+	border-right:1px solid #fff;
+	color:#fff;
+	width:108px;
+	height:40px;
+	font:bold 12px/18px verdana;
+}
+td.on {background:transparent url(i/head.gif) no-repeat bottom left;}
+th.on {
+	background:transparent url(i/head.gif) no-repeat bottom left;
+	padding-bottom:9px;
+	width:148px;
+}
+
+tfoot td {
+	background:transparent url(i/bg_th_side.gif) no-repeat top left;
+	height:64px;
+	vertical-align:top;
+	padding-top:8px;
+}
+tfoot td.on {
+	background:transparent url(i/bg_th_side.gif) no-repeat top left;
+	padding-top:16px;
+}
+tfoot td.side {background: transparent url(i/bg_th_side.gif) no-repeat top left;}
+</style>
+
+
+
+<link href="style.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="css/coin-slider.css" />
+<script type="text/javascript" src="js/cufon-yui.js"></script>
+<script type="text/javascript" src="js/cufon-quicksand.js"></script>
+<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
+<script type="text/javascript" src="js/coin-slider.min.js"></script>
+<script type="text/javascript">
+	function head(){  
+		$("#td5").css("display","");
+		$("#td9").css("display","");
+		$("#td11").css("display","");
+		$("#td14").css("display","");
+		$("#td16").css("display","");
+		$("#td20").css("display","");
+		$("#td23").css("display","");
+		$("#td26").css("display","");
+		$("#td29").css("display","");
+		
+	}
+	function activateThisColumn(column) {
+  var table = document.getElementById('pricetable');
+  var form = document.getElementById('formcontainer');
+
+  // first, remove the 'on' class from all other th's
+  var ths = table.getElementsByTagName('th');
+  for (var g=0; g<ths.length; g++) {
+    removeClassName(ths[g], 'on');
+    if (!hasClass(ths[g],'side')) {
+      ths[g].style.display = 'none';
+    }
+  }
+  // then, remove the 'on' class from all other td's
+  var tds = table.getElementsByTagName('td');
+  for (var m=0; m<tds.length; m++) {
+    removeClassName(tds[m], 'on');
+    if (!hasClass(tds[m],'side')) {
+      tds[m].style.display = 'none';
+    }
+  }
+
+  // now, add the class 'on' to the selected th
+  var newths = getElementsByClassName(column, 'th', table);
+  for (var h=0; h<newths.length; h++) {
+    addClassName(newths[h], 'on');
+    newths[h].style.display = '';
+    // not all browsers like display = 'block' for cells
+  }
+    // and finally, add the class 'on' to the selected td
+  var newtds = getElementsByClassName(column, 'td', table);
+  for (var i=0; i<newtds.length; i++) {
+    addClassName(newtds[i], 'on');
+    newtds[i].style.display = '';
+    // not all browsers like display = 'block' for cells
+  }
+  // show the form!
+  form.style.display = 'block';
+}
+
+
+
+	
+</script>
+</head>
+<body>
+<div class="main">
+  <div class="header">
+    <div class="header_resize">
+      <div class="logo">
+        <h1><a href="index.html">Modern<span>Medical</span> <small></small></a></h1>
+      </div>
+      <div class="menu_nav">
+        <ul>
+          <?php
+        	if($_SESSION['doctor']){
+        	  echo  '<li class="active"><a href="index.php"><span>Home Page</span></a></li>';
+             echo '<li><a href="notification.php"><span>Notification</span></a></li>';
+		   echo '<li><a href="see_analysis.php"><span>See Patient</span></a></li>';
+		  echo '  <li><a href ="Master_data.php" > <span> '.$_SESSION['doctor'].' </span></a></li>';
+          		  
+		  }
+		  else{
+		   	
+		   exit();
+		  }
+		  ?>
+        </ul>
+      </div>
+      <div class="clr"></div>
+     
+      <div class="clr"></div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="content_resize">
+      <div class="mainbar">
+        
+        
+        
+        
+         <div class="article"  id="insert_data" style="background-color: #FAFAFA">
+      	
+     <center>
+       <table id="insertion" >
+       	
+	<thead>
+		<tr>
+			<th class="choiceA on" style="width: 20px">Email</th>
+			<th class="choiceA on">First Name</th>
+			<th class="choiceA on">Last Name</th>
+			<th class="choiceA on">Picture</th>
+		</tr>
+	</thead>
+	
+	<tbody>
+		
+
+		
+		
+		
+		
+		
+		<?php
+		$num = "ah";
+	    get($num);
+			
+		 $count = count($patients);
+		$i=0;
+		for ($i=0 ; $i < $count ; $i++){
+			 $dbc   = mysqli_connect("localhost","ahmedali","ahmedali32", "medical") or die("no connection");
+			$w = $i+1 ;
+			
+			 $query1= "SELECT  `picture_name`, `email` FROM `pictures` WHERE email = '$patients[$i]'";
+			 $data1 = mysqli_query($dbc , $query1);
+			
+			 $pic = array();
+			 $r=0;
+			 while ($row = mysqli_fetch_array($data1)){
+			 	
+				 $pic[$r] = $row['picture_name'];
+				 $r++;
+			}
+			  $query2= "SELECT  `last_name`, `email` FROM `patients` WHERE email = '$patients[$i]'";
+			 $data2 = mysqli_query($dbc , $query2);
+			
+			 $last_name = array();
+			 $n=0;
+			 while ($row = mysqli_fetch_array($data2)){
+			 	
+				 $last_name[$n] = $row['last_name'];
+				 $n++;
+			}
+			 
+			 
+			
+			$path = "images/";
+			
+		echo'
+		<tr> 
+			<td class="side"><center>'.$patients[$i].'<center></td>
+			<td class="choiceA"><center>'.$first_name[$i].'</center></td>
+			<td class="choiceA">'.$last_name[0].'</td>
+			<td class="choiceA"><center><image width="170" height="40"  src="'.$path.$pic[0].'" /></center></td>
+		</tr>';
+		
+		}
+		?>
+			
+			
+	</tbody>
+	<p></p>
+	<div id="feedback1">
+		
+	</div>
+	</table></center>
+        </div>
+        
+        
+        
+        
+        
+        
+        
+        
+       </div>
+       
+      <div class="sidebar" style="background-color: #F2F2F2">
+        <div class="sidebar" style="background-color: #F2F2F2">
+       
+         <div class="sidebar" style="background-color: #F2F2F2">
+        <div class="searchform" style="display: none">
+          <form id="formsearch" name="formsearch" method="post" action="#">
+            <span>
+            <input name="editbox_search" class="editbox_search" id="editbox_search" maxlength="80" value="Search our site:" type="text" />
+            </span>
+            <input name="button_search" src="images/search.gif" class="button_search" type="image" />
+          </form>
+        </div>
+        <div class="clr"></div>
+        
+        <?php
+        	$dbc = mysqli_connect("localhost","ahmedali","ahmedali32", "medical") or die("no connection");
+              $email = $_SESSION['email'];
+			 $query= "select picture_name from pictures where email = '$email'";
+			 $data = mysqli_query($dbc , $query);
+			  $i = 0 ;
+			  $picture=array();
+             while ($row = mysqli_fetch_array($data)) {
+  	            if($row['picture_name']){
+  	            	$_SESSION['pic']="okay";
+  	           
+			    }
+				$picture[$i] =$row['picture_name']; 
+			
+			 }
+			 echo '<br/><center>  <image  width="200" height="300"  src="'."images/".$picture[0].'"  ></center>
+			 <br />
+			 <br />
+			 <br />
+			 ';
+        
+        ?>
+        
+        
+        <?php
+        if($_SESSION['pic']){
+        	
+        }
+		else{
+			echo '<form action="#" enctype="multipart/form-data" method="post">
+         <div><label>Image</label><input id="file" name="image" type="file" /></div>
+         <br />
+          <input type="image" type="submit" name="imageField" id="save" style="float: left" src="images/submit.gif" class="send" />
+
+		</form>'; 
+		}
+      	  
+			  
+			  
+			  ?>
+			  <?php
+        	$dbc = mysqli_connect("localhost","ahmedali","ahmedali32", "medical") or die("no connection");
+ 
+             $file = $_FILES['image']['tmp_name'];
+            if(!isset($file)){
+            	
+            }else{
+            	
+			   $email = $_SESSION['email'];
+			    $image =addslashes( $_FILES['image']['tmp_name']);
+			    $image_name =addslashes( $_FILES['image']['name']);
+			    $image_size = getimagesize($_FILES['image']['tmp_name']);
+			   
+			   if($image_size==FALSE){
+			   	echo "that is not an image";
+			   }else{
+	            		   	
+					 move_uploaded_file($_FILES["image"]["tmp_name"],
+               "images/" . $_FILES["image"]["name"]);
+			   
+			   $check = "select email from pictures where email='$email'";
+			   $data1=mysqli_query($dbc,$check);
+			   
+			  
+			  if(mysqli_num_rows($data1) == 0){
+			   
+			   $insert = "INSERT INTO `pictures`(`id`, `picture_name`, `email`) VALUES ('','$image_name','$email')";	
+			  mysqli_query($dbc , $insert);
+			 
+			  }
+			  else{
+			  	echo "you inserted picture";
+			  }
+			   }
+			   
+			mysqli_close($dbc);   
+            }
+             
+?>
+			  
+			  </div>
+        </div>
+      </div>
+      <div class="clr"></div>
+    </div>
+  </div>
+  <div class="fbg">
+    <div class="fbg_resize">
+      <div class="col c1">
+        <h2><span>Image</span> Gallery</h2>
+        <a href="#"><img src="images/gal1.jpg" width="75" height="75" alt="" class="gal" /></a> <a href="#"><img src="images/gal2.jpg" width="75" height="75" alt="" class="gal" /></a> <a href="#"><img src="images/gal3.jpg" width="75" height="75" alt="" class="gal" /></a> <a href="#"><img src="images/gal4.jpg" width="75" height="75" alt="" class="gal" /></a> <a href="#"><img src="images/gal5.jpg" width="75" height="75" alt="" class="gal" /></a> <a href="#"><img src="images/gal6.jpg" width="75" height="75" alt="" class="gal" /></a> </div>
+      <div class="col c2">
+        <h2><span>Services</span> Overview</h2>
+        <p>Curabitur sed urna id nunc pulvinar semper. Nunc sit amet tortor sit amet lacus sagittis posuere cursus vitae nunc.Etiam venenatis, turpis at eleifend porta, nisl nulla bibendum justo.</p>
+        <ul class="fbg_ul">
+          <li><a href="#">Lorem ipsum dolor labore et dolore.</a></li>
+          <li><a href="#">Excepteur officia deserunt.</a></li>
+          <li><a href="#">Integer tellus ipsum tempor sed.</a></li>
+        </ul>
+      </div>
+      <div class="col c3">
+        <h2><span>Contact</span> Us</h2>
+        <p>Nullam quam lorem, tristique non vestibulum nec, consectetur in risus. Aliquam a quam vel leo gravida gravida eu porttitor dui.</p>
+        <p class="contact_info"> <span>Address:</span> Alexandria Alagmy<br />
+          <span>Telephone:</span>018 +80 +227<br />
+          <span>FAX:</span> +458-4578<br />
+          <span>Others:</span> +301 - 0125 - 01258<br />
+          <span>E-mail:</span> <a href="#">emineme32@yahoo.com</a> </p>
+      </div>
+      <div class="clr"></div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="footer_resize">
+      <p class="lf">&copy; Copyright Ahmed Ali.</p>
+      <p class="rf">Design by : <a href="https://www.facebook.com/ahmed.ali.5817?ref=tn_tnmn">Ahmed Ali</a></p>
+      <div style="clear:both;"></div>
+    </div>
+  </div>
+</div>
+<div align=center>اللهم اشفى واعفى عن كل مريض </div></body>
+</html>
